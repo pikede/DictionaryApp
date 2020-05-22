@@ -1,4 +1,4 @@
-Urban Dictionary App by Prince Ikede
+Dictionary App by Prince Ikede
 ----------------------------------------------------------------------------------------------------
 
 Tools used: Android, Runnable, Handler, Dependency Injection, Kotlin, Multithreading, MutableLiveData, Coroutines, MVVM Architecture, Retrofit, Koin, Junit, Mockito, Room Database
