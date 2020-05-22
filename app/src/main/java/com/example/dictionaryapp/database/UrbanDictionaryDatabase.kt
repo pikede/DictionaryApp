@@ -5,7 +5,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-// Database to store word definitions from api call for offline operations
 @Database(entities = [DatabaseEntity::class], version = 1, exportSchema = false)
 abstract class UrbanDictionaryDatabase : RoomDatabase() {
 

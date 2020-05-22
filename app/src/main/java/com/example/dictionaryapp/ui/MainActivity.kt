@@ -52,14 +52,14 @@ class MainActivity : AppCompatActivity() {
             if (enteredText != null) {
                 entered_word.text = SpannableStringBuilder(enteredText)
             }
-            if (buttonId != -1){
+            if (buttonId != -1) {
                 findViewById<RadioButton>(buttonId).isChecked = true
             }
         }
     }
 
     private fun initRecyclerView() {
-        recyclerView =  recycleview
+        recyclerView = recycleview
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
         dataSet = urbanDictionaryViewModel.wordDefinitions.value ?: emptyList()
@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateProgressBar() {
         val wordEntered = entered_word
-        if (wordEntered.text.isEmpty()){
+        if (wordEntered.text.isEmpty()) {
             return
         }
         progress_Bar = progressBar
