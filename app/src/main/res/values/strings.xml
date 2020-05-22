@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Prince Ikede DictionaryApp</string>
+    <string name="definition">Definition</string>
+    <string name="author">Author: </string>
+    <string name="written_on">Written On: </string>
+    <string name="thumbs_down">Thumbs_down</string>
+    <string name="searchHint">Enter a word to Search For</string>
+    <string name="search">Search</string>
+    <string name="sort_by_thumbs_up">Sort by thumbs up</string>
+    <string name="sort_by_thumbs_down">Sort by thumbs down</string>
+    <string name="clear">Clear Filter</string>
+</resources>
