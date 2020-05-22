@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class DictionaryService {
 
-    companion object{
+    companion object {
         private val baseUrl = "https://mashape-community-urban-dictionary.p.rapidapi.com"
 
         private val retrofit = Retrofit.Builder()
