@@ -23,6 +23,6 @@ Features:
 
 Improvements that can be made:
 
-- Recycle view could have more styling
-- more testing for example testing when database is empty, then proceeding to make network call
+- Recycler view could have more styling
+- user tracking and analytics
 - base Url and api key could have been put into config files
