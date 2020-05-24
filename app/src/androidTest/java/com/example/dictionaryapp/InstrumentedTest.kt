@@ -37,12 +37,6 @@ class InstrumentedTest {
         urbanDictionaryDao = urbanDictionaryDatabase.wordDefinitionDao()
     }
 
-    @After
-    @Throws(IOException::class)
-    fun finishedTesting() {
-        urbanDictionaryDatabase.close()
-    }
-
     @Test
     @Throws(Exception::class)
     fun givenSampleDefinition_writeOneDefinitionToDatabase_databaseSizeIsOne() {
@@ -78,5 +72,11 @@ class InstrumentedTest {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.example.dictionaryapp", appContext.packageName)
+    }
+
+    @After
+    @Throws(IOException::class)
+    fun finishedTesting() {
+        urbanDictionaryDatabase.close()
     }
 }

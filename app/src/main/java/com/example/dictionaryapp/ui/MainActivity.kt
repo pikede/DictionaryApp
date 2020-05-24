@@ -27,9 +27,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dataSet: List<WordDefinitions>
     private lateinit var recyclerView: RecyclerView
 
-    private lateinit var progress_Bar: ProgressBar
-    private var handlerThread = Handler()
-
     companion object {
         private const val ENTERED_TEXT = "ENTERED_TEXT"
         private const val SELECTED_RADIO_BUTTON_ID = "SELECTED_RADIO_BUTTON_ID"
@@ -40,11 +37,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
 
-        initRecyclerView()
-        initRadioGroup()
-
-        btnSearch.setOnClickListener { setupSearchButton() }
-        btnClear.setOnClickListener { clearAll() }
+        setUpViews()
 
         if (savedInstanceState != null) {
             val enteredText = savedInstanceState.getString(ENTERED_TEXT)
@@ -58,6 +51,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setUpViews() {
+        initRecyclerView()
+        initRadioGroup()
+        btnSearch.setOnClickListener { setupSearchButton() }
+        btnClear.setOnClickListener { clearAll() }
+    }
+
     private fun initRecyclerView() {
         recyclerView = recycleview
         recyclerView.setHasFixedSize(true)
@@ -67,11 +67,6 @@ class MainActivity : AppCompatActivity() {
         urbanDictionaryViewModel.wordDefinitions.observe(this@MainActivity, Observer {
             updateRecycleView(it ?: emptyList())
         })
-    }
-
-    private fun setupSearchButton() {
-        updateProgressBar()
-        urbanDictionaryViewModel.getWordDefinitions(entered_word.text.toString())
     }
 
     private fun initRadioGroup() = radio_sort.setOnCheckedChangeListener { radioGroup, _ ->
@@ -90,6 +85,11 @@ class MainActivity : AppCompatActivity() {
                 updateRecycleView(dataSet)
             }
         }
+    }
+
+    private fun setupSearchButton() {
+        updateProgressBar()
+        urbanDictionaryViewModel.getWordDefinitions(entered_word.text.toString())
     }
 
     private fun clearAll() {
@@ -112,22 +112,26 @@ class MainActivity : AppCompatActivity() {
         if (wordEntered.text.isEmpty()) {
             return
         }
-        progress_Bar = progressBar
-        progress_Bar.visibility = View.VISIBLE
+
+        val progressBar: ProgressBar = progressBar
+        progressBar.visibility = View.VISIBLE
+        var handlerThread = Handler()
         var progressStatus = 0
+
         Thread(Runnable {
             run {
                 while (progressStatus < 100) {
                     progressStatus += 30
                     android.os.SystemClock.sleep(200)
-                    handlerThread.post { progress_Bar.progress = progressStatus }
+                    handlerThread.post { progressBar.progress = progressStatus }
                 }
                 handlerThread.post {
-                    progress_Bar.setProgress(100)
-                    progress_Bar.visibility = View.GONE
+                    progressBar.setProgress(100)
+                    progressBar.visibility = View.GONE
                 }
             }
         }).start()
+
         recyclerView.adapter = mAdapter
     }
 
