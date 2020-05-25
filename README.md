@@ -25,4 +25,3 @@ Improvements that can be made:
 
 - Recycler view could have more styling
 - user tracking and analytics
-- base Url and api key could have been put into config files
