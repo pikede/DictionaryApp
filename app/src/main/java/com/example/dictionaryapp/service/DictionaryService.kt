@@ -13,7 +13,7 @@ class DictionaryService {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val urbanDictionaryRetrofitInterface: UrbanDictionaryService =
+        val urbanDictionaryRetrofit: UrbanDictionaryService =
             retrofit.create(UrbanDictionaryService::class.java)
     }
 }

@@ -33,7 +33,7 @@ class UrbanDictionaryRepository(
         if (isRetrofitRequestInProgress) return
         else {
             isRetrofitRequestInProgress = true
-            databaseDefinitions = DictionaryService.urbanDictionaryRetrofitInterface
+            databaseDefinitions = DictionaryService.urbanDictionaryRetrofit
                 .getWordDefinitions(enteredWord).list
             isRetrofitRequestInProgress = false
         }
