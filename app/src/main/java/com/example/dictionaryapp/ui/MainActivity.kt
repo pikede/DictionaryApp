@@ -7,6 +7,7 @@ import android.text.SpannableStringBuilder
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.RadioButton
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -88,6 +89,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupSearchButton() {
+        val wordEntered = entered_word.text.trim()
+        if (wordEntered.isEmpty()) {
+            Toast.makeText(this, "Enter a word", Toast.LENGTH_SHORT).show()
+            return
+        }
         showProgressBar()
         urbanDictionaryViewModel.getWordDefinitions(entered_word.text.toString())
     }
@@ -108,15 +114,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showProgressBar() {
-        val wordEntered = entered_word
-        if (wordEntered.text.isEmpty()) {
-            return
-        } else {
-            updateProgressBar()
-        }
-    }
-
-    private fun updateProgressBar() {
         val progressBar: ProgressBar = progressBar
         progressBar.visibility = View.VISIBLE
         var handlerThread = Handler()
