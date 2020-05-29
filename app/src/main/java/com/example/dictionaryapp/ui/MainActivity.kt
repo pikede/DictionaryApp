@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupSearchButton() {
-        updateProgressBar()
+        showProgressBar()
         urbanDictionaryViewModel.getWordDefinitions(entered_word.text.toString())
     }
 
@@ -107,12 +107,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateProgressBar() {
+    private fun showProgressBar() {
         val wordEntered = entered_word
         if (wordEntered.text.isEmpty()) {
             return
+        } else {
+            updateProgressBar()
         }
+    }
 
+    private fun updateProgressBar() {
         val progressBar: ProgressBar = progressBar
         progressBar.visibility = View.VISIBLE
         var handlerThread = Handler()
