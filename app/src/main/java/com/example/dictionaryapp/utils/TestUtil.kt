@@ -3,7 +3,7 @@ package com.example.dictionaryapp.utils
 import com.example.dictionaryapp.models.WordDefinitions
 
 fun sampleDefinitionList(word: String) =
-    listOf<WordDefinitions>(
+    listOf(
         WordDefinitions(
             "definition",
             "permalink",
@@ -20,7 +20,7 @@ fun sampleDefinitionList(word: String) =
     )
 
 fun sampleDefinitionListForUnitTest(word: String) =
-    listOf<WordDefinitions>(
+    listOf(
         WordDefinitions(
             "definition",
             "permalink",

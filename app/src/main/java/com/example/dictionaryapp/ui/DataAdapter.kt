@@ -31,7 +31,7 @@ class DataAdapter(private var dataset: List<WordDefinitions>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(dataset.get(position))
+        holder.bind(dataset[position])
         (holder.itemView as LinearLayout).setBackgroundColor(randomColor())
     }
 

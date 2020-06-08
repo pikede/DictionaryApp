@@ -11,7 +11,7 @@ abstract class UrbanDictionaryDatabase : RoomDatabase() {
     abstract fun wordDefinitionDao(): UrbanDictionaryDao
 
     companion object {
-        private val databaseName = "urban_dictionary"
+        private const val databaseName = "urban_dictionary"
 
         @Volatile
         private var INSTANCE: UrbanDictionaryDatabase? = null

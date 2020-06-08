@@ -8,7 +8,7 @@ import gr.net.maroulis.library.EasySplashScreen
 
 class SplashScreen : AppCompatActivity() {
 
-    lateinit var splashScreenConfig: EasySplashScreen
+    private lateinit var splashScreenConfig: EasySplashScreen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
