@@ -1,5 +1,7 @@
 package com.example.dictionaryapp.ui
 
+import android.app.Activity
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -91,11 +93,15 @@ class MainActivity : AppCompatActivity() {
     private fun setupSearchButton() {
         val wordEntered = entered_word.text.trim()
         if (wordEntered.isEmpty()) {
-            Toast.makeText(this, "Enter a word", Toast.LENGTH_SHORT).show()
+            toast(this, "Enter a word");
             return
         }
         showProgressBar()
         urbanDictionaryViewModel.getWordDefinitions(entered_word.text.toString())
+    }
+
+    private fun Activity.toast(context: Context, message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     private fun clearAll() {
@@ -116,7 +122,7 @@ class MainActivity : AppCompatActivity() {
     private fun showProgressBar() {
         val progressBar: ProgressBar = progressBar
         progressBar.visibility = View.VISIBLE
-        var handlerThread = Handler()
+        val handlerThread = Handler()
         var progressStatus = 0
 
         Thread(Runnable {
@@ -127,7 +133,7 @@ class MainActivity : AppCompatActivity() {
                     handlerThread.post { progressBar.progress = progressStatus }
                 }
                 handlerThread.post {
-                    progressBar.setProgress(100)
+                    progressBar.progress = 100
                     progressBar.visibility = View.GONE
                 }
             }

@@ -1,6 +1,6 @@
 package com.example.dictionaryapp.utils
 
-enum class SortTypeEnum() {
+enum class SortTypeEnum {
     UP,
     DOWN
 }
