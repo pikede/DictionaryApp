@@ -1,13 +1,11 @@
 package com.example.dictionaryapp.ui
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.text.SpannableStringBuilder
-import android.view.View
-import android.widget.ProgressBar
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -29,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mAdapter: DataAdapter
     private lateinit var dataSet: List<WordDefinitions>
     private lateinit var recyclerView: RecyclerView
+    private lateinit var progressDialog: ProgressDialog
 
     companion object {
         private const val ENTERED_TEXT = "ENTERED_TEXT"
@@ -58,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         initRecyclerView()
         initRadioGroup()
         btnSearch.setOnClickListener { setupSearchButton() }
+        progressDialog = ProgressDialog(this)
         btnClear.setOnClickListener { clearAll() }
     }
 
@@ -67,8 +67,9 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         dataSet = urbanDictionaryViewModel.wordDefinitions.value ?: emptyList()
         mAdapter = DataAdapter(dataSet)
+        recyclerView.adapter = mAdapter
         urbanDictionaryViewModel.wordDefinitions.observe(this@MainActivity, Observer {
-            updateRecycleView(it ?: emptyList())
+            updateRecycleView(it)
         })
     }
 
@@ -96,7 +97,8 @@ class MainActivity : AppCompatActivity() {
             toast(this, "Enter a word");
             return
         }
-        showProgressBar()
+        progressDialog.setMessage("Searching for ${wordEntered.toString().toLowerCase()}...")
+        progressDialog.show()
         urbanDictionaryViewModel.getWordDefinitions(entered_word.text.toString())
     }
 
@@ -119,31 +121,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showProgressBar() {
-        val progressBar: ProgressBar = progressBar
-        progressBar.visibility = View.VISIBLE
-        val handlerThread = Handler()
-        var progressStatus = 0
-
-        Thread(Runnable {
-            run {
-                while (progressStatus < 100) {
-                    progressStatus += 30
-                    android.os.SystemClock.sleep(200)
-                    handlerThread.post { progressBar.progress = progressStatus }
-                }
-                handlerThread.post {
-                    progressBar.progress = 100
-                    progressBar.visibility = View.GONE
-                }
-            }
-        }).start()
-
-        recyclerView.adapter = mAdapter
-    }
-
     private fun updateRecycleView(newData: List<WordDefinitions>) {
+        if (newData.isEmpty()) {
+            toast(this, "Word not found")
+            return
+        }
+        progressDialog.hide()
         dataSet = newData
         mAdapter.updateDataSet(dataSet)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        progressDialog.hide()
     }
 }
