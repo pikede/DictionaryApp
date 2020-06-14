@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupSearchButton() {
         val wordEntered = entered_word.text.trim()
         if (wordEntered.isEmpty()) {
-            toast(this, "Enter a word");
+            toast(this, "Enter a word")
             return
         }
         progressDialog.setMessage("Searching for ${wordEntered.toString().toLowerCase()}...")
