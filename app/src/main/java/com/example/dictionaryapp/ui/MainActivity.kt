@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(this@MainActivity)
             dataAdapter = DataAdapter()
-            binding.recycleview.adapter = dataAdapter
+            adapter = dataAdapter
         }
     }
 
@@ -99,12 +99,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun clearAll() {
+        urbanDictionaryViewModel.clearWordDefinition()
         with(binding) {
-            enteredWord.text = SpannableStringBuilder("")
+            enteredWord.text.clear()
             thumbsUp.isChecked = false
             thumbsDown.isChecked = false
         }
-        urbanDictionaryViewModel.clearWordDefinition()
     }
 
     private val definitionObserver = Observer<List<WordDefinitions>> {
