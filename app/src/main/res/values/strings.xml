@@ -8,4 +8,5 @@
     <string name="sort_by_thumbs_up">Sort by thumbs up</string>
     <string name="sort_by_thumbs_down">Sort by thumbs down</string>
     <string name="clear">Clear Filter</string>
+    <string name="error_getting_word_definition">Error getting word definition</string>
 </resources>

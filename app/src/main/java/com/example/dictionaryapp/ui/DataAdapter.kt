@@ -11,13 +11,13 @@ import com.example.dictionaryapp.models.WordDefinitions
 import kotlinx.android.synthetic.main.searched_items.view.*
 import kotlin.random.Random
 
-class DataAdapter(private var dataset: List<WordDefinitions>) :
+class DataAdapter(private var dataset: List<WordDefinitions> = emptyList()) :
     RecyclerView.Adapter<DataAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
             R.layout.searched_items, parent, false
-        ) as LinearLayout
+        )
         return ViewHolder(view)
     }
 
@@ -25,6 +25,7 @@ class DataAdapter(private var dataset: List<WordDefinitions>) :
         return dataset.count()
     }
 
+    // use diffutil here and remove notify dataset changed
     fun updateDataSet(newDataset: List<WordDefinitions>) {
         dataset = newDataset
         notifyDataSetChanged()

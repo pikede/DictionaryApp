@@ -4,7 +4,7 @@ import android.util.Log
 import com.example.dictionaryapp.database.DatabaseEntity
 import com.example.dictionaryapp.database.UrbanDictionaryDatabase
 import com.example.dictionaryapp.models.WordDefinitions
-import com.example.dictionaryapp.service.DictionaryService
+import com.example.dictionaryapp.repository.service.DictionaryService
 import com.example.dictionaryapp.utils.listFromJson
 import com.example.dictionaryapp.utils.listToJson
 import java.lang.Exception
@@ -21,9 +21,10 @@ class UrbanDictionaryRepository(
     suspend fun getSearchResults(enteredWord: String): List<WordDefinitions> {
         try {
             databaseDefinitions = getDefinitionsFromDatabase(enteredWord)
+            Log.d("**logged fetching definition ", enteredWord)
         } catch (e: Exception) {
-            Log.e("ERROR GETTING DATA ", e.message ?: "")
             getDefinitionsFromDatabase(enteredWord)
+            Log.e("**logged ERROR GETTING DATA ", e.message ?: e.toString())
         }
         return databaseDefinitions
     }

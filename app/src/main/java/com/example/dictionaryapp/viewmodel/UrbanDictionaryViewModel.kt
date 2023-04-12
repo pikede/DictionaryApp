@@ -17,36 +17,42 @@ class UrbanDictionaryViewModel(
 
     fun getWordDefinitions(enteredWord: String) = viewModelScope.launch(Dispatchers.IO) {
         wordDefinitions.postValue(
-            if (enteredWord.isNotEmpty()) {
-                urbanDictionaryRepository.getSearchResults(enteredWord)
-            } else {
-                emptyList()
-            }
+            urbanDictionaryRepository.getSearchResults(enteredWord)
         )
+        // handle error scenario
+    }
+
+    fun clearWordDefinition() {
+        wordDefinitions.postValue(emptyList())
     }
 
     // sorts word definitions and returns back a sorted list
     fun sortDefinitions(
-        sortType: SortTypeEnum,
-        wordDefinitions: List<WordDefinitions>
-    ): List<WordDefinitions> {
-        val map = mutableMapOf<Int, WordDefinitions>()
-        when (sortType) {
-            SortTypeEnum.UP -> {
-                for (definition in wordDefinitions) {
-                    map[definition.thumbsUp] = definition
-                }
-            }
+        sortType: SortTypeEnum
+    ) {
+        // sort on Dispatcher IO as this list might be very large
+        viewModelScope.launch(Dispatchers.IO) {
+            wordDefinitions.value?.let {
+                // sorts by thumbs up or thumbs down
+                val map = mutableMapOf<Int, WordDefinitions>()
+                when (sortType) {
+                    SortTypeEnum.UP -> {
+                        for (word in it) {
+                            map[word.thumbsUp] = word
+                        }
+                    }
 
-            SortTypeEnum.DOWN -> {
-                for (definition in wordDefinitions) {
-                    map[definition.thumbsDown] = definition
+                    SortTypeEnum.DOWN -> {
+                        for (word in it) {
+                            map[word.thumbsDown] = word
+                        }
+                    }
                 }
+
+                // reverses increasing order
+                wordDefinitions.postValue(map.toSortedMap().values.reversed())
             }
         }
-
-        // reverses sorted map natural increasing order
-        return map.toSortedMap().values.reversed()
     }
 
 }

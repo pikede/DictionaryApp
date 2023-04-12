@@ -1,4 +1,4 @@
-package com.example.dictionaryapp.service
+package com.example.dictionaryapp.repository.service
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,7 +13,7 @@ class DictionaryService {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val urbanDictionaryRetrofit: UrbanDictionaryService =
-            retrofit.create(UrbanDictionaryService::class.java)
+        val urbanDictionaryRetrofit: UrbanDictionaryApi =
+            retrofit.create(UrbanDictionaryApi::class.java)
     }
 }
