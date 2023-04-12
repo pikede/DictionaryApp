@@ -1,5 +1,7 @@
 package com.example.dictionaryapp.viewmodel
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,17 +15,19 @@ class UrbanDictionaryViewModel(
     private val urbanDictionaryRepository: UrbanDictionaryRepository
 ) : ViewModel() {
 
-    val wordDefinitions = MutableLiveData<List<WordDefinitions>>()
+    private val _wordDefinitions = MutableLiveData<List<WordDefinitions>>()
+    val wordDefinitions: LiveData<List<WordDefinitions>> get() = _wordDefinitions
 
     fun getWordDefinitions(enteredWord: String) = viewModelScope.launch(Dispatchers.IO) {
-        wordDefinitions.postValue(
+        _wordDefinitions.postValue(
             urbanDictionaryRepository.getSearchResults(enteredWord)
         )
         // handle error scenario
     }
 
     fun clearWordDefinition() {
-        wordDefinitions.postValue(emptyList())
+        Log.d("**logged", "clearing in viewmodel")
+        _wordDefinitions.postValue(listOf())
     }
 
     // sorts word definitions and returns back a sorted list
@@ -32,7 +36,7 @@ class UrbanDictionaryViewModel(
     ) {
         // sort on Dispatcher IO as this list might be very large
         viewModelScope.launch(Dispatchers.IO) {
-            wordDefinitions.value?.let {
+            _wordDefinitions.value?.let {
                 // sorts by thumbs up or thumbs down
                 val map = mutableMapOf<Int, WordDefinitions>()
                 when (sortType) {
@@ -50,7 +54,7 @@ class UrbanDictionaryViewModel(
                 }
 
                 // reverses increasing order
-                wordDefinitions.postValue(map.toSortedMap().values.reversed())
+                _wordDefinitions.postValue(map.toSortedMap().values.reversed())
             }
         }
     }
