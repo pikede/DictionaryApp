@@ -36,6 +36,7 @@ class UrbanDictionaryRepository(
             isRetrofitRequestInProgress = true
             databaseDefinitions = DictionaryService.urbanDictionaryRetrofit
                 .getWordDefinitions(enteredWord).list
+            isRetrofitRequestInProgress = false
         }
     }
 
